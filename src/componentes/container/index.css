@@ -1,0 +1,25 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin: 5px 5px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.child {
+  width: 50%;
+}
+
+.red {
+  background-color: tomato;
+}
+
+.green {
+  background-color: rgb(0, 126, 0);
+}
