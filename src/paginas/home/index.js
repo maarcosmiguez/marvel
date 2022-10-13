@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Container from "../../componentes/container";
-import Container2 from "../../componentes/container2";
-import { people } from "../../data";
+import { apiMarvel } from "../../api";
 import { withRouter } from "../../hooks/withRouter";
 import "./index.css";
 
@@ -17,31 +15,49 @@ class Home extends Component {
   }
 
   getData = async () => {
-    const response = await fetch(
-      "https://gateway.marvel.com/v1/public/characters?ts=1000&limit=100&apikey=b6847664cfd533605e325588b62af044&hash=4990c9ec6007b3a745c1bbc20f22b7a3&events=321,314,315"
-    );
+    const response = await fetch(`${apiMarvel}`);
     const data = await response.json();
-    this.setState({ personajes: data.data.results });
+    const dataMarvel = data.data.results;
+    this.setState({ personajes: dataMarvel });
   };
 
-  navegarDetallePersonaje = (p) => {
-    console.log("personaje:", p);
+  navegarDetallePersonaje = (e) => {
     const { router } = this.props;
-    router.navigate("/perfil", { state: { datosPersonaje: p } });
+    router.navigate("/detalle", { state: { datosPersonaje: e } });
+    // const idRoute = e.id;
+    // router.navigate(`/${idRoute}`, { state: { datosPersonaje: e } });
   };
 
   render() {
+    if (this.props.router.location.datosPersonaje) {
+      const datosPersonaje = this.props.router.location.state;
+    }
+    // console.log("45 vengo del evento", datosPersonaje);
     const { personajes } = this.state;
+    console.log("los personajes son", personajes);
+
     return (
       <div className="Home">
-        <h2>Hola soy home</h2>
-        <Link to="/contacto">Ir a contacto</Link>
-        <Container2 personas={people} />
-        {personajes.map((p, key) => (
-          <p onClick={() => this.navegarDetallePersonaje(p)} key={key.toString()}>
-            {p.name + " " + p.id}
-          </p>
-        ))}
+        {/* <p>Me gusto {datosPersonaje.name}</p> */}
+        <h2>Personajes de Marvel</h2>
+        {personajes
+          .map((e, key) => (
+            <div>
+              <div>
+                <p onClick={() => this.navegarDetallePersonaje(e)} key={key.toString()}>
+                  {e.name}
+
+                  {console.log("e", e.name)}
+                  {/* {console.log("datos", datosPersonaje.name)} */}
+                </p>
+                <a href={e.urls[0].url} target="_blank">
+                  Visitar la web oficial del personaje
+                </a>
+              </div>
+              <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`}></img>
+            </div>
+          ))
+          .slice(1 - 15)}
       </div>
     );
   }

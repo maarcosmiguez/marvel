@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
+import { Link } from "react-router-dom";
+import { withRouter } from "../../hooks/withRouter";
 
 class NotFound extends Component {
   constructor(props) {
@@ -9,8 +11,13 @@ class NotFound extends Component {
 
   render() {
     return (
-      <div className="NotFound">
-        <h2>404 NOT FOUND</h2>
+      <div>
+        <div className="NotFound">
+          <h2>Página no encontrada</h2>
+        </div>
+        <div className="NotFound">
+          <Link to="/">Ir a Home</Link>
+        </div>
       </div>
     );
   }
