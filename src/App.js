@@ -33,10 +33,6 @@ class App extends Component {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* {this.state.dataApi.map((e, key) => (
-              <Route path="/{e.id}" element={<Ampliacion />} />
-            ))} */}
-
             <Route path="/detalle" element={<Ampliacion />} />
             <Route path="/evento" element={<Evento />} />
             <Route path="/404" element={<NotFound />} />

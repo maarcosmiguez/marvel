@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "../../hooks/withRouter";
 import "./index.css";
+import "../ampliacion/index.css";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import Stack from "react-bootstrap/Stack";
+import { Button } from "react-bootstrap";
+import Accordion from "react-bootstrap/Accordion";
 import { parametrosComunes } from "../../api";
 
 class Ampliacion extends Component {
@@ -39,7 +45,6 @@ class Ampliacion extends Component {
     end = {
       date: endDate.toLocaleDateString(),
     };
-    console.log("formatDate", start, end, startDate, endDate);
     this.setState({ dateStart: start, dateEnd: end });
   };
 
@@ -47,39 +52,46 @@ class Ampliacion extends Component {
     const { datosPersonaje, e } = this.props.router.location.state;
     const { eventos } = this.state;
     const { dateStart, dateEnd } = this.state;
-    console.log("en render", eventos);
-    console.log("en render date", dateStart, dateEnd);
-    console.log("datos personaje son", datosPersonaje);
+
     return (
       <div className="Evento">
-        <Link to="/">Ir a Home</Link>
         {eventos.map((e, key) => (
-          <div>
-            <div>
-              <h2 key={key.toString()}>{datosPersonaje.name}</h2>
-              <a href={e.urls[0].url} target="_blank">
-                Web del evento
-              </a>
-            </div>
-            <img src={`${e.thumbnail.path}.${e.thumbnail.extension}`}></img>
+          <div className="d-flex justify-content-center">
+            <div className="Perfil m-5">
+              <Card style={{ width: "50rem" }}>
+                <Card.Img variant="top" src={`${e.thumbnail.path}.${e.thumbnail.extension}`} />
 
-            <div>
-              <h6>Inicio el {dateStart.date}</h6>
-              <h6>Finalizó el {dateEnd.date}</h6>
-            </div>
+                <Card.Body>
+                  <Card.Title>{datosPersonaje.name}</Card.Title>
+                </Card.Body>
 
-            <div>
-              <p> {e.description}</p>
-
-              <h6>Participaron:</h6>
-
-              <ul>
-                {e.characters.items.map((x, key) => (
-                  <li onClick={() => this.navegarHome(x)} key={key.toString()}>
-                    {x.name}
-                  </li>
-                ))}
-              </ul>
+                <ListGroup className="list-group-flush">
+                  <ListGroup.Item>{e.description}</ListGroup.Item>
+                  <ListGroup.Item>Inicio el {dateStart.date}</ListGroup.Item>
+                  <ListGroup.Item>Finalizó el {dateEnd.date}</ListGroup.Item>
+                </ListGroup>
+                <Card.Body>
+                  <div className="d-flex">
+                    <Stack gap={1}>
+                      <Accordion defaultActiveKey="0">
+                        <Accordion.Item eventKey="0">
+                          <Accordion.Header>Participaron</Accordion.Header>
+                          <Accordion.Body>
+                            <ul>
+                              {e.characters.items.map((x, key) => (
+                                <li>{x.name}</li>
+                              ))}
+                            </ul>
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+                      <Button variant="outline-secondary">
+                        <Link to="/">Ver todos los personajes</Link>
+                      </Button>
+                    </Stack>
+                  </div>
+                </Card.Body>
+              </Card>
             </div>
           </div>
         ))}

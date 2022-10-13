@@ -1,0 +1,13 @@
+.img-ampliacion {
+  max-height: 20vh;
+}
+
+a {
+  text-decoration: none !important;
+  color: white;
+}
+
+.accordion-body p:hover {
+  color: #0a58ca;
+  cursor: pointer;
+}
