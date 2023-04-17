@@ -61,7 +61,7 @@ class Home extends Component {
                 </Card>
               </div>
             ))
-            .slice(1 - 40)}
+            .slice(1 - 40 )}
         </div>
       </div>
     );
