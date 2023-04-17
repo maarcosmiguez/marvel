@@ -32,7 +32,6 @@ class Ampliacion extends Component {
   navegarHome = (x) => {
     const { router } = this.props;
     router.navigate("/", { state: { datosPersonaje: x } });
-    console.log("devuelvo a home", x);
   };
 
   formatDate = (start, end) => {
